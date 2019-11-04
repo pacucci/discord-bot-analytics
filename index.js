@@ -1,5 +1,5 @@
 const https = require('https')
-
+const os = require('os')
 /**
  * @typedef AnalyticData
  * @property {Number} servers
@@ -20,7 +20,10 @@ class Analytics{
             apiToken,
             discordBot:discordBot,
             sent_messages:0,
-            received_messages:0
+            received_messages:0,
+            bot_id:0,
+            bot_profilepicture:""
+            
         }
         if(discordBot!=null){
             discordBot.on("messageCreate",(msg)=>{
@@ -80,8 +83,11 @@ class Analytics{
             users:discordBot.users.size,
             channels:channelCount,
             sent_messages:this.options.sent_messages,
+            bot_id:discordBot.user.id,
+            bot_profilepicture:discordBot.user.displayAvatarURL,
             received_messages: this.options.received_messages,
             ram_used:process.memoryUsage().rss //not true usage but is true ram consumption by pc spec
+            ram_total:os.totalmem()
         }
         this.options.sent_messages=0;
         this.options.received_messages=0;
