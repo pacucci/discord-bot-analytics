@@ -131,14 +131,14 @@ function httpsPost(body,auth){
                     body=JSON.parse(body)
                 }catch(e){}
                 if(res.statusCode!=200){
-                    console.log("API Reporter Error (CODE NOT 200): ",body);
+                    console.log("CheweyBot API Reporter Error (CODE NOT 200): ",body);
                 }
                 resolve(body)
             })
         })
         
         req.on('error', (error) => {
-            console.error("API Reporter Error (ERR): ",error)
+            console.error("CheweyBot API Reporter Error (ERR): ",error)
             reject(error)
         })
         
