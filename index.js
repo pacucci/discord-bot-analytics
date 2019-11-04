@@ -42,8 +42,13 @@ class Analytics{
             discordBot.on("ready",()=>{
                 setTimeout(() => {
                     this.startAutoReport()
+console.log("[API REPORTER]: AutoReport started.");
                     // send initial on load
-                    this.sendReport(this.buildBody(this.options.discordBot)).then(() => {}, () => {})
+                    this.sendReport(this.buildBody(this.options.discordBot)).then(() => {
+console.log("[API REPORTER]: Initial Report sent.");
+
+}, () => {})
+
                 }, 10000);
             })
         }
@@ -126,14 +131,14 @@ function httpsPost(body,auth){
                     body=JSON.parse(body)
                 }catch(e){}
                 if(res.statusCode!=200){
-                    console.log("Report stats Chewey Bot API error ",body);
+                    console.log("API Reporter Error (CODE NOT 200): ",body);
                 }
                 resolve(body)
             })
         })
         
         req.on('error', (error) => {
-            console.error("Report stats Chewey Bot API Error",error)
+            console.error("API Reporter Error (ERR): ",error)
             reject(error)
         })
         
