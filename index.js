@@ -45,8 +45,6 @@ class Analytics{
 console.log("[API REPORTER]: AutoReport started.");
                     // send initial on load
                     this.sendReport(this.buildBody(this.options.discordBot)).then(() => {
-console.log("[API REPORTER]: Initial Report sent.");
-
 }, () => {})
 
                 }, 10000);
