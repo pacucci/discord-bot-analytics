@@ -22,6 +22,7 @@ class Analytics{
             sent_messages:0,
             received_messages:0,
             bot_id:0,
+            bot_name:"",
             bot_profilepicture:""
             
         }
@@ -42,7 +43,6 @@ class Analytics{
             discordBot.on("ready",()=>{
                 setTimeout(() => {
                     this.startAutoReport()
-console.log("[API REPORTER]: AutoReport started.");
                     // send initial on load
                     this.sendReport(this.buildBody(this.options.discordBot)).then(() => {
 }, () => {})
@@ -56,6 +56,8 @@ console.log("[API REPORTER]: AutoReport started.");
      * Start auto reporting - only used if discordBot Client provided
      */
     startAutoReport(){
+console.log("[CHEWEY API REPORTER]: AutoReport started.");
+
         if (this.options.discordBot && !this.options.interval) {
             this.options.interval = setInterval(() => {
                 this.sendReport(this.buildBody(this.options.discordBot)).then(() => {}, () => {}) //ignore auto errors
@@ -67,6 +69,8 @@ console.log("[API REPORTER]: AutoReport started.");
      * Stop auto reporting - to start again use startAutoReport()
      */
     stopAutoReport(){
+console.log("[CHEWEY API REPORTER]: AutoReport stopped.");
+
         if (this.options.interval){
             clearInterval(this.options.interval)   
             delete this.options.interval
@@ -88,8 +92,9 @@ console.log("[API REPORTER]: AutoReport started.");
             sent_messages:this.options.sent_messages,
             bot_id:discordBot.user.id,
             bot_profilepicture:discordBot.user.displayAvatarURL,
+            bot_name:discordBot.user.username,
             received_messages: this.options.received_messages,
-            ram_used:process.memoryUsage().rss //not true usage but is true ram consumption by pc spec
+            ram_used:process.memoryUsage().rss, //not true usage but is true ram consumption by pc spec
             ram_total:os.totalmem()
         }
         this.options.sent_messages=0;
@@ -141,6 +146,7 @@ function httpsPost(body,auth){
         })
         
         req.write(data)
+console.log("[CHEWEY API REPORTER]: Report posted.");
         req.end()
 
     })
